@@ -1,4 +1,6 @@
 var qs = document.querySelector.bind(document);
+var qsa = document.querySelectorAll.bind(document);
+var rows = [];
 document.onreadystatechange = function () {
   if (document.readyState == "interactive") {
     init();
@@ -11,7 +13,7 @@ var init = function(){
    qs('#RestoreFileButton').addEventListener('click', function (){
      qs('#rfile').click();
    } );
-
+   qs('#check').addEventListener('click', check);
 }
 var save = function(ev){
   var arr = ev.target.querySelectorAll('input');
@@ -27,15 +29,25 @@ var save = function(ev){
 var check = function(ev){
   ev.preventDefault();
   ev.stopPropagation();
-  localStorage["url"] = url;
-  var url = qs('.url').value;
-  localStorage["url"] = url;
+  var rows = qsa("tbody tr");
+  var len = rows.length;
+  var i;
+  for( i = 0; i < len; i++){
+    tr = rows[i];
+    url = tr.childNodes[2].innerText;
+    checkCell(url, tr);
+  }
+
+}
+
+var checkCell = function(url,tr){
   var iframe = document.createElement('iframe');
   iframe.style.display = "none";
   document.body.appendChild(iframe);
   var filter = function(info) {
     if (info.frameId !== 0){
-      qs("#results").innerHTML += "<li>"+info.url+"</li>";
+      var td = tr.insertCell(-1);
+      td.innerText = info.url;
     }
   }
 
@@ -47,7 +59,7 @@ var check = function(ev){
     ["responseHeaders"]);
 
   iframe.onload = function() {
-    chrome.webRequest.onCompleted.removeListener(filter);
+    //chrome.webRequest.onCompleted.removeListener(filter);
    // this.parentNode.removeChild(this);
   };
   iframe.src = url;
@@ -60,7 +72,7 @@ function restoreLocal() {
         r.onload = function (e) {
           var obj = xlsx(window.btoa(e.target.result));
 
-          var rows = obj.worksheets[0].data;
+          rows = obj.worksheets[0].data;
           tbody = qs("tbody");
           tbody.innerHTML = "";
           rows.forEach(function(row){

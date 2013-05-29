@@ -1,6 +1,5 @@
-function openMain(){
-  var extension = chrome.extension.getBackgroundPage();
-  extension.openOptions();
+function openOptions(){
+  chrome.tabs.create({url: "options.html"});
 }
 document.onreadystatechange = function () {
   if (document.readyState == "interactive") {
