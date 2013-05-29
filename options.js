@@ -61,6 +61,15 @@ function restoreLocal() {
           var obj = xlsx(window.btoa(e.target.result));
 
           var rows = obj.worksheets[0].data;
+          tbody = qs("tbody");
+          tbody.innerHTML = "";
+          rows.forEach(function(row){
+             var tr = tbody.insertRow(-1);
+             row.forEach(function(data){
+               var td = tr.insertCell(-1);
+               td.innerText = data.value;
+             });
+          });
         };
         r.onerror = function () {
             //InfoTip.alertI18n("message_cannotReadOptionsBackup");

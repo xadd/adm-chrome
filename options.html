@@ -9,26 +9,28 @@
     <script src="assets/scripts/jszip/jszip-load.js"></script>
     <script src="assets/scripts/jszip/jszip-deflate.js"></script>
     <script src="assets/scripts/jszip/jszip-inflate.js"></script>
+    <link rel="stylesheet" href="/assets/styles/bootstrap.css">
   </head>
 
   <body>
   <form id="cdn-urls">
-    <label>设置cdn url模式</label>
-    <input type="text"  placeholder="*://*.*/*">
+    <label>输入cdn url（例如："http://v.admaster.com.cn/*"）</label>
+    <input type="text">
     <!--input type="text"  placeholder="url"-->
     <button id="save">设置</button>
   </form>
 
 
 <tr class="section">
+    <td data-i18n-content="options_restoreLocal_help">
+        包含项目id,广告位id,页面url的excel表(xlsx格式)
+    </td>
+
     <td>
         <input type="file" id="rfile" name="rfile" style="visibility:hidden;position:absolute;"/>
         <button class="button" id="RestoreFileButton" data-i18n-content="options_restoreLocal">
             选择文件
         </button>
-    </td>
-    <td data-i18n-content="options_restoreLocal_help">
-        包含id url的xlsx文件
     </td>
 </tr>
 
@@ -50,10 +52,6 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td>Body content 1</td>
-      <td>Body content 2</td>
-    </tr>
   </tbody>
 </table>
   </body>
