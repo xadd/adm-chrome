@@ -1,14 +1,15 @@
+var qs = document.querySelector.bind(document);
 document.onreadystatechange = function () {
   if (document.readyState == "interactive") {
-    initApplication();
+    init();
   }
 }
-var initApplication = function(){
-   document.querySelector('#cdn-urls>input').value = localStorage["cdn-urls"];
-   document.querySelector('#cdn-urls').addEventListener('submit', save);
-   document.querySelector('#rfile').addEventListener('change', restoreLocal);
-   document.querySelector('#RestoreFileButton').addEventListener('click', function (){
-     document.querySelector('#rfile').click();
+var init = function(){
+   qs('#cdn-urls>input').value = localStorage["cdn-urls"];
+   qs('#cdn-urls').addEventListener('submit', save);
+   qs('#rfile').addEventListener('change', restoreLocal);
+   qs('#RestoreFileButton').addEventListener('click', function (){
+     qs('#rfile').click();
    } );
 
 }
@@ -27,14 +28,14 @@ var check = function(ev){
   ev.preventDefault();
   ev.stopPropagation();
   localStorage["url"] = url;
-  var url = document.querySelector('.url').value;
+  var url = qs('.url').value;
   localStorage["url"] = url;
   var iframe = document.createElement('iframe');
   iframe.style.display = "none";
   document.body.appendChild(iframe);
   var filter = function(info) {
     if (info.frameId !== 0){
-      document.querySelector("#results").innerHTML += "<li>"+info.url+"</li>";
+      qs("#results").innerHTML += "<li>"+info.url+"</li>";
     }
   }
 
@@ -53,7 +54,7 @@ var check = function(ev){
 }
 
 function restoreLocal() {
-    var rfile = document.querySelector("#rfile");
+    var rfile = qs("#rfile");
     if (rfile.files.length > 0 && rfile.files[0].name.length > 0) {
         var r = new FileReader();
         r.onload = function (e) {
