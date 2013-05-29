@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>代码检查</title>
+    <script src="options.js"></script>
+    <script src="assets/scripts/xlsx/xlsx.js"></script>
+    <script src="assets/scripts/jszip/jszip.js"></script>
+    <script src="assets/scripts/jszip/jszip-load.js"></script>
+    <script src="assets/scripts/jszip/jszip-deflate.js"></script>
+    <script src="assets/scripts/jszip/jszip-inflate.js"></script>
+  </head>
+
+  <body>
+  <form id="cdn-urls">
+    <label>设置cdn url模式</label>
+    <input type="text"  placeholder="*://*.*/*">
+    <!--input type="text"  placeholder="url"-->
+    <button id="save">设置</button>
+  </form>
+
+
+<tr class="section">
+    <td>
+        <input type="file" id="rfile" name="rfile" style="visibility:hidden;position:absolute;"/>
+        <button class="button" id="RestoreFileButton" data-i18n-content="options_restoreLocal">
+            选择文件
+        </button>
+    </td>
+    <td data-i18n-content="options_restoreLocal_help">
+        包含id url的xlsx文件
+    </td>
+</tr>
+
+  <div id="results">
+
+  </div>
+
+
+<table id="collection-container" class="table table-striped table-bordered bootstrap-datatable datatable">
+  <thead>
+    <tr>
+      <th>项目ID</th>
+      <th>广告ID</th>
+      <th>页面URL</th>
+      <th>代码URL</th>
+      <th>代码URL</th>
+      <th>代码URL</th>
+      <th>代码URL</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Body content 1</td>
+      <td>Body content 2</td>
+    </tr>
+  </tbody>
+</table>
+  </body>
+<script src="options.js"></script>
+
+</html>

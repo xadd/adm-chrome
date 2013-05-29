@@ -1,0 +1,6 @@
+[submodule "assets/scripts/xlsx"]
+	path = assets/scripts/xlsx
+	url = https://github.com/stephen-hardy/xlsx.js
+[submodule "assets/scripts/jszip"]
+	path = assets/scripts/jszip
+	url = https://github.com/Stuk/jszip

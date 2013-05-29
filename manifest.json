@@ -1,0 +1,16 @@
+{
+  "name": "code-checker",
+  "version": "1.0",
+  "description": "TL;DW",
+  "permissions": ["webRequest", "webRequestBlocking", "*://*/*"],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": true
+  },
+  "options_page": "options.html",
+  "browser_action": {
+    "default_title": "代码检查",      // optional; shown in tooltip
+    "default_popup": "popup.html"        // optional
+  },
+  "manifest_version": 2
+}
