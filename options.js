@@ -32,32 +32,29 @@ var check = function(ev){
   var len = rows.length;
   var i;
   closures = [];
+  var makeClosure = function (data){
+    return function(next){
+      return function(){
+        checkEach(data,next);
+      };
+    }
+  }
+
   for( i = 0; i < len; i++){
     closures.push(makeClosure(rows[i]));
   }
   funArr = [];
-  var makeNext = function (i){
-    if(i === (len-1)){
-      funArr[i] = closures[i]();
-    }
-    else{
-     funArr[i] = closures[i](makeNext(i+1));
-    }
+  var linkNext = function (i){
+    funArr[i] = closures[i]( ((i === (len-1)) ? "" : linkNext(i+1)) );
     return funArr[i];
   }
 
-  makeNext(0);
+  linkNext(0);
 
   funArr[0].call();
 }
-function makeClosure(data){
-  return function(next){
-    return function(){
-      checkCell(data,next);
-    };
-  }
-}
-var checkCell = function(tr,next){
+
+var checkEach = function(tr,next){
   var url = tr.childNodes[2].innerText;
   var iframe = document.createElement('iframe');
   iframe.style.display = "none";
