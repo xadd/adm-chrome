@@ -1,6 +1,5 @@
 var qs = document.querySelector.bind(document);
 var qsa = document.querySelectorAll.bind(document);
-var rows = [];
 document.onreadystatechange = function () {
   if (document.readyState == "interactive") {
     init();
@@ -32,15 +31,34 @@ var check = function(ev){
   var rows = qsa("tbody tr");
   var len = rows.length;
   var i;
+  closures = [];
   for( i = 0; i < len; i++){
-    tr = rows[i];
-    url = tr.childNodes[2].innerText;
-    checkCell(url, tr);
+    closures.push(makeClosure(rows[i]));
+  }
+  funArr = [];
+  var makeNext = function (i){
+    if(i === (len-1)){
+      funArr[i] = closures[i]();
+    }
+    else{
+     funArr[i] = closures[i](makeNext(i+1));
+    }
+    return funArr[i];
   }
 
-}
+  makeNext(0);
 
-var checkCell = function(url,tr){
+  funArr[0].call();
+}
+function makeClosure(data){
+  return function(next){
+    return function(){
+      checkCell(data,next);
+    };
+  }
+}
+var checkCell = function(tr,next){
+  var url = tr.childNodes[2].innerText;
   var iframe = document.createElement('iframe');
   iframe.style.display = "none";
   document.body.appendChild(iframe);
@@ -59,8 +77,10 @@ var checkCell = function(url,tr){
     ["responseHeaders"]);
 
   iframe.onload = function() {
-    //chrome.webRequest.onCompleted.removeListener(filter);
-   // this.parentNode.removeChild(this);
+    chrome.webRequest.onCompleted.removeListener(filter);
+    this.parentNode.removeChild(this);
+    if(typeof next === "function")
+      {next.call();}
   };
   iframe.src = url;
 }
@@ -72,7 +92,7 @@ function restoreLocal() {
         r.onload = function (e) {
           var obj = xlsx(window.btoa(e.target.result));
 
-          rows = obj.worksheets[0].data;
+          var rows = obj.worksheets[0].data;
           tbody = qs("tbody");
           tbody.innerHTML = "";
           rows.forEach(function(row){
